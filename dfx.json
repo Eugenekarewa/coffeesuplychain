@@ -1,0 +1,26 @@
+{
+  "canisters": {
+    "CoffeeSupplyChain_backend": {
+      "main": "src/CoffeeSupplyChain_backend/main.mo",
+      "type": "motoko"
+    },
+    "CoffeeSupplyChain_frontend": {
+      "dependencies": [
+        "CoffeeSupplyChain_backend"
+      ],
+      "source": [
+        "src/CoffeeSupplyChain_frontend/dist"
+      ],
+      "type": "assets",
+      "workspace": "CoffeeSupplyChain_frontend"
+    }
+  },
+  "defaults": {
+    "build": {
+      "args": "",
+      "packtool": ""
+    }
+  },
+  "output_env_file": ".env",
+  "version": 1
+}
