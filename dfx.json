@@ -1,18 +1,28 @@
 {
   "canisters": {
-    "CoffeeSupplyChain_backend": {
-      "main": "src/CoffeeSupplyChain_backend/main.mo",
+    "CoffeeBean": {
+      "main": "src/CoffeeSupplyChain_backend/CoffeeBean/main.mo",
       "type": "motoko"
     },
-    "CoffeeSupplyChain_frontend": {
-      "dependencies": [
-        "CoffeeSupplyChain_backend"
-      ],
-      "source": [
-        "src/CoffeeSupplyChain_frontend/dist"
-      ],
-      "type": "assets",
-      "workspace": "CoffeeSupplyChain_frontend"
+    "CoffeeFarm": {
+      "main": "src/CoffeeSupplyChain_backend/CoffeeFarm/main.mo",
+      "type": "motoko"
+    },
+    "AuctionTracking": {
+      "main": "src/CoffeeSupplyChain_backend/AuctionTracking/main.mo",
+      "type": "motoko"
+    },
+    "Retailer": {
+      "main": "src/CoffeeSupplyChain_backend/Retailers/main.mo",
+      "type": "motoko"
+    },
+    "Roasters": {
+      "main": "src/CoffeeSupplyChain_backend/Roasters/main.mo",
+      "type": "motoko"
+    },
+    "SmartPayment": {
+      "main": "src/CoffeeSupplyChain_backend/SmartPayment/main.mo",
+      "type": "motoko"
     }
   },
   "defaults": {
@@ -21,6 +31,5 @@
       "packtool": ""
     }
   },
-  "output_env_file": ".env",
   "version": 1
 }
