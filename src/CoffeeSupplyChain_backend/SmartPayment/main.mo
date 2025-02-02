@@ -5,7 +5,6 @@ import Array "mo:base/Array";
 import AuctionService "canister:AuctionService";
 
 actor SmartPayment {
-  // Define payment transaction
   type PaymentTransaction = {
     transactionId: Text;
     sender: Text;
@@ -15,10 +14,8 @@ actor SmartPayment {
     status: Text;
   };
 
-  // Storage for payment transactions
   stable var transactions: [PaymentTransaction] = [];
 
-  // Initiate a payment
   public func initiatePayment(
     transactionId: Text,
     sender: Text,
@@ -38,7 +35,6 @@ actor SmartPayment {
     "Payment initiated successfully: " # transactionId
   };
 
-  // Update payment status
   public func updatePaymentStatus(transactionId: Text, newStatus: Text) : async Text {
     transactions := Array.map(
       transactions,
@@ -53,12 +49,11 @@ actor SmartPayment {
     "Payment status updated for transaction: " # transactionId
   };
 
-  // Retrieve all transactions
   public query func getTransactions() : async [PaymentTransaction] {
     transactions
   };
 
-public func verifyAuctionPayment(auctionId: Text) : async Text {
+  public func verifyAuctionPayment(auctionId: Text) : async Text {
     let transaction = Array.find<PaymentTransaction>(transactions, func(t) { t.transactionId == auctionId });
     switch (transaction) {
       case (null) { "Payment not found for auction" };
@@ -71,6 +66,5 @@ public func verifyAuctionPayment(auctionId: Text) : async Text {
         };
       };
     };
-
   };
 }

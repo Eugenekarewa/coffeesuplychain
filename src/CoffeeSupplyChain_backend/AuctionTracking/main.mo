@@ -6,7 +6,6 @@ import AuctionService "canister:AuctionService";
 import Time "mo:base/Time";
 
 actor AuctionTracking {
-  // Define auction details
   type AuctionDetails = {
     auctionId: Text;
     itemName: Text;
@@ -18,10 +17,8 @@ actor AuctionTracking {
     batchId: Text;
   };
 
-  // Storage for auctions
   stable var auctions: [AuctionDetails] = [];
 
-  // Create a new auction
   public func createAuction(
     auctionId: Text,
     itemName: Text,
@@ -29,31 +26,10 @@ actor AuctionTracking {
     endTime: Nat,
     batchId: Text
   ) : async Text {
-    // Verify the product with Retailer canister
     let verificationResult = await AuctionService.createAuction(auctionId, itemName, startingBid, endTime, batchId);
-    
-    switch (verificationResult) {
-      case (#ok) {
-        let auction = {
-          auctionId;
-          itemName;
-          startingBid;
-          highestBid = startingBid;
-          highestBidder = "";
-          endTime;
-          status = "Active";
-          batchId;
-        };
-        auctions := Array.append([auction], auctions);
-        "Auction created successfully: " # auctionId
-      };
-      case (#err(message)) {
-        "Failed to create auction: " # message
-      };
-    };
+    verificationResult
   };
 
-  // Place a bid
   public func placeBid(auctionId: Text, bidder: Text, bidAmount: Nat) : async Text {
     let auction = Array.find<AuctionDetails>(auctions, func(a) { a.auctionId == auctionId });
     switch (auction) {
@@ -83,7 +59,6 @@ actor AuctionTracking {
     };
   };
 
-  // Close auction
   public func closeAuction(auctionId: Text) : async Text {
     var closedAuction: ?AuctionDetails = null;
     auctions := Array.map<AuctionDetails, AuctionDetails>(
@@ -101,7 +76,6 @@ actor AuctionTracking {
     switch (closedAuction) {
       case (null) { "Auction not found or already closed: " # auctionId };
       case (?auction) {
-        // Update Retailer inventory
         let updateResult = await Retailer.updateInventory(auction.batchId, auction.highestBidder, 1);
         switch (updateResult) {
           case (#ok) { "Auction closed successfully: " # auctionId # ". Inventory updated." };
@@ -111,7 +85,6 @@ actor AuctionTracking {
     };
   };
 
-  // Retrieve all auctions
   public query func getAuctions() : async [AuctionDetails] {
     auctions
   };

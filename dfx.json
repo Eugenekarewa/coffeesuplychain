@@ -8,12 +8,13 @@
       "main": "src/CoffeeSupplyChain_backend/CoffeeFarm/main.mo",
       "type": "motoko"
     },
+    
     "AuctionTracking": {
       "main": "src/CoffeeSupplyChain_backend/AuctionTracking/main.mo",
       "type": "motoko"
     },
     "Retailer": {
-      "main": "src/CoffeeSupplyChain_backend/Retailers/main.mo",
+      "main": "src/CoffeeSupplyChain_backend/Retailer/main.mo",
       "type": "motoko"
     },
     "Roasters": {
@@ -22,6 +23,10 @@
     },
     "SmartPayment": {
       "main": "src/CoffeeSupplyChain_backend/SmartPayment/main.mo",
+      "type": "motoko"
+    },
+    "AuctionManager": {
+      "main": "src/CoffeeSupplyChain_backend/AuctionManager/main.mo",
       "type": "motoko"
     }
   },

@@ -2,11 +2,9 @@ import Nat "mo:base/Nat";
 import Text "mo:base/Text";
 import Iter "mo:base/Iter";
 import Array "mo:base/Array";
-import CoffeeBean "canister:CoffeeBean";
-import Roasters "canister:Roasters";
+import Principal "mo:base/Principal";
 
 actor CoffeeFarm {
-  // Define a coffee batch
   type CoffeeBatch = {
     id: Text;
     farmLocation: Text;
@@ -15,10 +13,8 @@ actor CoffeeFarm {
     status: Text;
   };
 
-  // Storage for coffee batches
   stable var coffeeBatches: [CoffeeBatch] = [];
 
-  // Add a new coffee batch
   public func addBatch(
     id: Text,
     farmLocation: Text,
@@ -37,7 +33,6 @@ actor CoffeeFarm {
     "Batch added successfully: " # id
   };
 
-  // Update coffee batch status
   public func updateStatus(id: Text, newStatus: Text) : async Text {
     if (Text.size(newStatus) == 0) {
         return "Invalid status: Status cannot be empty.";
@@ -55,13 +50,12 @@ actor CoffeeFarm {
     "Status updated for batch: " # id
   };
 
-  // Fetch coffee batches
   public query func getBatches() : async [CoffeeBatch] {
     coffeeBatches
   };
 
-  // Add a new batch with bean details (inter-canister call)
   public func addBatchWithBeanDetails(
+    coffeeBeanCanisterId: Principal,
     id: Text,
     farmLocation: Text,
     certifications: [Text],
@@ -71,17 +65,22 @@ actor CoffeeFarm {
     origin: Text
   ) : async Text {
     let batchResult = await addBatch(id, farmLocation, certifications, timestamp, status);
-    let beanResult = await CoffeeBean.addBeanDetails(id, roastLevel, origin, timestamp);
+    let coffeeBeanActor = actor(Principal.toText(coffeeBeanCanisterId)) : actor {
+      addBeanDetails : (Text, Text, Text, Nat) -> async Text;
+    };
+    let beanResult = await coffeeBeanActor.addBeanDetails(id, roastLevel, origin, timestamp);
     batchResult # " and " # beanResult
   };
 
-  // Get complete information for a batch (inter-canister call)
-  public func getCompleteBatchInfo(batchId: Text) : async Text {
+  public func getCompleteBatchInfo(coffeeBeanCanisterId: Principal, batchId: Text) : async Text {
     let batchInfo = Array.find<CoffeeBatch>(coffeeBatches, func(b) { b.id == batchId });
     switch (batchInfo) {
       case (null) { "Batch not found" };
       case (?batch) {
-        let beanInfo = await CoffeeBean.getBeanDetailsByBatchId(batchId);
+        let coffeeBeanActor = actor(Principal.toText(coffeeBeanCanisterId)) : actor {
+          getBeanDetailsByBatchId : (Text) -> async ?{ roastLevel: Text; origin: Text };
+        };
+        let beanInfo = await coffeeBeanActor.getBeanDetailsByBatchId(batchId);
         switch (beanInfo) {
           case (null) { "Batch found, but no bean details available" };
           case (?bean) {
@@ -96,25 +95,24 @@ actor CoffeeFarm {
     };
   };
 
-  // New function to link bean details
-  public func linkBeanDetails(farmId: Text, beanDetails: CoffeeBean.BeanDetails) : async Text {
-    // Implementation to link bean details to a farm
+  public func linkBeanDetails(farmId: Text, beanDetails: { roastLevel: Text; origin: Text }) : async Text {
     "Bean details linked to farm: " # farmId
   };
 
-  // New function to send batch to roaster
-  public func sendBatchToRoaster(batchId: Text, roasterId: Text) : async Text {
+  public func sendBatchToRoaster(roastersCanisterId: Principal, batchId: Text, roasterId: Text) : async Text {
     let batch = Array.find<CoffeeBatch>(coffeeBatches, func(b) { b.id == batchId });
     switch (batch) {
       case (null) { "Batch not found" };
       case (?b) {
-        let roastingResult = await Roasters.receiveBatch(b, roasterId);
+        let roastersActor = actor(Principal.toText(roastersCanisterId)) : actor {
+          receiveBatch : (CoffeeBatch, Text) -> async Text;
+        };
+        let roastingResult = await roastersActor.receiveBatch(b, roasterId);
         "Batch sent to roaster: " # roastingResult
       };
     };
   };
 
-  // New function to verify batch
   public func verifyBatch(batchId: Text, farmId: Text) : async Text {
     let batch = Array.find<CoffeeBatch>(coffeeBatches, func(b) { b.id == batchId });
     switch (batch) {
