@@ -18,6 +18,22 @@ actor AuctionService {
 
   stable var auctions: [AuctionDetails] = [];
 
+  public func createAuction(productId: Text, productName: Text, startingBid: Nat, endTime: Nat, batchId: Text) : async Text {
+    let auctionId = Text.concat(productId, Nat.toText(auctions.size()));
+    let newAuction: AuctionDetails = {
+      auctionId = auctionId;
+      itemName = productName;
+      startingBid = startingBid;
+      highestBid = startingBid;
+      highestBidder = "";
+      endTime = endTime;
+      status = "Open";
+      batchId = batchId;
+    };
+    auctions := Array.append(auctions, [newAuction]);
+    return auctionId;
+  };
+
   public func closeAuction(auctionId: Text) : async Text {
     let result = await AuctionTrackingInterface.closeAuction(auctionId);
     return result;

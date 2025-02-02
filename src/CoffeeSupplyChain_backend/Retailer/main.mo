@@ -21,4 +21,14 @@ actor Retailer {
       case (?_) { #ok };
     };
   };
+
+  public func addProduct(
+    productId: Text,
+    productName: Text,
+    batchId: Text,
+    price: Nat,
+    quantity: Nat
+  ) : async Text {
+    await ProductService.addProduct(productId, productName, batchId, price, quantity)
+  };
 }

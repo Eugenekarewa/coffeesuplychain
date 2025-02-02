@@ -3,6 +3,7 @@ import Text "mo:base/Text";
 import Array "mo:base/Array";
 import Retailer "canister:Retailer";
 import CoffeeFarm "canister:CoffeeFarm";
+import ProductService "canister:ProductService";
 
 actor Roasters {
   type RoastingBatch = {

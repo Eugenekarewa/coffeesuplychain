@@ -25,10 +25,7 @@
       "main":"src/CoffeeSupplyChain_backend/ProductService/main.mo",
       "type":"motoko"
     },
-    "ProductServiceInterface":{
-      "main": "src/CoffeeSupplyChain_backend/ProductServiceInterface/main.mo",
-      "type":"motoko"
-    },
+    
     "Retailer": {
       "main": "src/CoffeeSupplyChain_backend/Retailer/main.mo",
       "type": "motoko"

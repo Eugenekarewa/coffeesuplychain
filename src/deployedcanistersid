@@ -1,0 +1,12 @@
+Backend canister via Candid interface:
+    AuctionManager: http://127.0.0.1:4943/?canisterId=aovwi-4maaa-aaaaa-qaagq-cai&id=bkyz2-fmaaa-aaaaa-qaaaq-cai
+    AuctionService: http://127.0.0.1:4943/?canisterId=aovwi-4maaa-aaaaa-qaagq-cai&id=avqkn-guaaa-aaaaa-qaaea-cai
+    AuctionTracking: http://127.0.0.1:4943/?canisterId=aovwi-4maaa-aaaaa-qaagq-cai&id=bd3sg-teaaa-aaaaa-qaaba-cai
+    AuctionTrackingInterface: http://127.0.0.1:4943/?canisterId=aovwi-4maaa-aaaaa-qaagq-cai&id=ajuq4-ruaaa-aaaaa-qaaga-cai
+    CoffeeBean: http://127.0.0.1:4943/?canisterId=aovwi-4maaa-aaaaa-qaagq-cai&id=be2us-64aaa-aaaaa-qaabq-cai
+    CoffeeFarm: http://127.0.0.1:4943/?canisterId=aovwi-4maaa-aaaaa-qaagq-cai&id=br5f7-7uaaa-aaaaa-qaaca-cai
+    ProductService: http://127.0.0.1:4943/?canisterId=aovwi-4maaa-aaaaa-qaagq-cai&id=asrmz-lmaaa-aaaaa-qaaeq-cai
+    Retailer: http://127.0.0.1:4943/?canisterId=aovwi-4maaa-aaaaa-qaagq-cai&id=bw4dl-smaaa-aaaaa-qaacq-cai
+    RetailerInterface: http://127.0.0.1:4943/?canisterId=aovwi-4maaa-aaaaa-qaagq-cai&id=a4tbr-q4aaa-aaaaa-qaafq-cai
+    Roasters: http://127.0.0.1:4943/?canisterId=aovwi-4maaa-aaaaa-qaagq-cai&id=b77ix-eeaaa-aaaaa-qaada-cai
+    SmartPayment: http://127.0.0.1:4943/?canisterId=aovwi-4maaa-aaaaa-qaagq-cai&id=by6od-j4aaa-aaaaa-qaadq-cai

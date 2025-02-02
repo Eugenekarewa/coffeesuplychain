@@ -1,6 +1,6 @@
 import Text "mo:base/Text";
 import Nat "mo:base/Nat";
-import ProductServiceInterface "canister:ProductServiceInterface";
+import ProductServiceInterface "../ProductServiceInterface";
 import AuctionService "canister:AuctionService";
 
 actor AuctionManager {

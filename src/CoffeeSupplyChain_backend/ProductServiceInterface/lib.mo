@@ -13,5 +13,6 @@ module {
   public type ProductServiceInterface = actor {
     addProduct: (Text, Text, Text, Nat, Nat) -> async Text;
     getProduct: (Text) -> async ?Stock;
+    getProductByBatchId: (Text) -> async ?Stock;
   };
 };
