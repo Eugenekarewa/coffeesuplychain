@@ -1,20 +1,30 @@
-import Nat "mo:base/Nat";
 import Text "mo:base/Text";
-import Array "mo:base/Array";
-import Retailer "canister:Retailer";
+import Nat "mo:base/Nat";
+import ProductServiceInterface "canister:ProductServiceInterface";
 import AuctionService "canister:AuctionService";
 
 actor AuctionManager {
+  var productService : ?ProductServiceInterface.ProductServiceInterface = null;
+
+  public func setProductService(ps: ProductServiceInterface.ProductServiceInterface) : async () {
+    productService := ?ps;
+  };
+
   public func createAuctionForProduct(
     productId: Text,
     startingBid: Nat,
     endTime: Nat
   ) : async Text {
-    let product = await Retailer.getProduct(productId);
-    switch (product) {
-      case (null) { "Product not found" };
-      case (?p) {
-        return await AuctionService.createAuction(productId, p.productName, startingBid, endTime, p.batchId);
+    switch (productService) {
+      case (null) { return "Product service not set"; };
+      case (?ps) {
+        let product = await ps.getProduct(productId);
+        switch (product) {
+          case (null) { return "Product not found"; };
+          case (?p) {
+            return await AuctionService.createAuction(productId, p.productName, startingBid, endTime, p.batchId);
+          };
+        };
       };
     };
   };

@@ -1,6 +1,5 @@
 import Nat "mo:base/Nat";
 import Text "mo:base/Text";
-import Iter "mo:base/Iter";
 import Array "mo:base/Array";
 import AuctionService "canister:AuctionService";
 
@@ -36,9 +35,9 @@ actor SmartPayment {
   };
 
   public func updatePaymentStatus(transactionId: Text, newStatus: Text) : async Text {
-    transactions := Array.map(
+    transactions := Array.map<PaymentTransaction, PaymentTransaction>(
       transactions,
-      func (txn) {
+      func (txn: PaymentTransaction) : PaymentTransaction {
         if (txn.transactionId == transactionId) {
           { txn with status = newStatus }
         } else {
@@ -54,7 +53,7 @@ actor SmartPayment {
   };
 
   public func verifyAuctionPayment(auctionId: Text) : async Text {
-    let transaction = Array.find<PaymentTransaction>(transactions, func(t) { t.transactionId == auctionId });
+    let transaction = Array.find<PaymentTransaction>(transactions, func(t: PaymentTransaction) : Bool { t.transactionId == auctionId });
     switch (transaction) {
       case (null) { "Payment not found for auction" };
       case (?t) {

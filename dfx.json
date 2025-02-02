@@ -13,9 +13,29 @@
       "main": "src/CoffeeSupplyChain_backend/AuctionTracking/main.mo",
       "type": "motoko"
     },
+    "AuctionTrackingInterface" :{
+      "main":"src/CoffeeSupplyChain_backend/AuctionTrackingInterface/main.mo",
+      "type":"motoko"
+    },
+    "AuctionService" :{
+      "main": "src/CoffeeSupplyChain_backend/AuctionService/main.mo",
+      "type": "motoko"
+    },
+    "ProductService" :{
+      "main":"src/CoffeeSupplyChain_backend/ProductService/main.mo",
+      "type":"motoko"
+    },
+    "ProductServiceInterface":{
+      "main": "src/CoffeeSupplyChain_backend/ProductServiceInterface/main.mo",
+      "type":"motoko"
+    },
     "Retailer": {
       "main": "src/CoffeeSupplyChain_backend/Retailer/main.mo",
       "type": "motoko"
+    },
+    "RetailerInterface":{
+      "main": "src/CoffeeSupplyChain_backend/RetailerInterface/main.mo",
+      "type":"motoko"
     },
     "Roasters": {
       "main": "src/CoffeeSupplyChain_backend/Roasters/main.mo",
