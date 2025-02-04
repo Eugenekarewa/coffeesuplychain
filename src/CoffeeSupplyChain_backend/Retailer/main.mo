@@ -1,9 +1,6 @@
 import Nat "mo:base/Nat";
 import Text "mo:base/Text";
 import Array "mo:base/Array";
-import ProductService "canister:ProductService";
-import AuctionManager "canister:AuctionManager";
-import RetailerInterface "canister:RetailerInterface";
 
 actor Retailer {
   type Stock = {
@@ -14,11 +11,13 @@ actor Retailer {
     quantity: Nat;
   };
 
-  public func verifyProduct(batchId: Text) : async {#ok; #err : Text} {
-    let product = await ProductService.getProductByBatchId(batchId);
+  stable var stock: [Stock] = [];
+
+  public func verifyProduct(batchId: Text) : async { #ok : (); #err : Text } {
+    let product = Array.find<Stock>(stock, func(s) { s.batchId == batchId });
     switch (product) {
       case (null) { #err("Product not found") };
-      case (?_) { #ok };
+      case (?_) { #ok() };
     };
   };
 
@@ -29,6 +28,14 @@ actor Retailer {
     price: Nat,
     quantity: Nat
   ) : async Text {
-    await ProductService.addProduct(productId, productName, batchId, price, quantity)
+    let newProduct : Stock = {
+      productId;
+      productName;
+      batchId;
+      price;
+      quantity;
+    };
+    stock := Array.append([newProduct], stock);
+    "Product added successfully."
   };
 }

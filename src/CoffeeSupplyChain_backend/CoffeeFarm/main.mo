@@ -1,6 +1,5 @@
 import Nat "mo:base/Nat";
 import Text "mo:base/Text";
-import Iter "mo:base/Iter";
 import Array "mo:base/Array";
 import Principal "mo:base/Principal";
 
@@ -95,7 +94,7 @@ actor CoffeeFarm {
     };
   };
 
-  public func linkBeanDetails(farmId: Text, beanDetails: { roastLevel: Text; origin: Text }) : async Text {
+  public func linkBeanDetails(farmId: Text, _beanDetails: { roastLevel: Text; origin: Text }) : async Text {
     "Bean details linked to farm: " # farmId
   };
 

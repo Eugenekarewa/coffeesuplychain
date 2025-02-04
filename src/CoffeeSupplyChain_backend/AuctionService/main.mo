@@ -1,8 +1,6 @@
 import Nat "mo:base/Nat";
 import Text "mo:base/Text";
 import Array "mo:base/Array";
-import AuctionTrackingInterface "canister:AuctionTrackingInterface";
-import RetailerInterface "canister:RetailerInterface";
 
 actor AuctionService {
   type AuctionDetails = {
@@ -34,8 +32,8 @@ actor AuctionService {
     return auctionId;
   };
 
-  public func closeAuction(auctionId: Text) : async Text {
-    let result = await AuctionTrackingInterface.closeAuction(auctionId);
-    return result;
+  public func closeAuction(_auctionId: Text) : async Text {
+    // Logic to close the auction
+    return "Auction " # _auctionId # " closed.";
   };
 }

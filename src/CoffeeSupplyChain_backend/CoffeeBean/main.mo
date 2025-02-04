@@ -42,7 +42,7 @@ actor CoffeeBean {
     switch (beanDetail) {
       case (null) { "Bean details not found" };
       case (?bean) {
-        let linkResult = await CoffeeFarm.linkBeanDetails(farmId, bean);
+        let _linkResult = await CoffeeFarm.linkBeanDetails(farmId, bean);
         "Bean details linked to farm: " # farmId
       };
     };
